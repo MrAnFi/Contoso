@@ -1,18 +1,8 @@
-resource "azurerm_resource_group" "main" {
-  name     = "${var.app_name}app-rg"
+module "avm-ptn-aks-production"  { 
+  source  = "Azure/avm-ptn-aks-production/azurerm" 
+  version = "0.1.0" 
   location = var.location
-}
-
-resource "azurerm_storage_account" "main" {
-  name                     = "${var.app_name}appsa"
-  resource_group_name      = azurerm_resource_group.main.name
-  location                 = var.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
-resource "azurerm_storage_container" "main" {
-  name                  = "content"
-  storage_account_name  = azurerm_storage_account.main.name
-  container_access_type = "private"
+  name = "AKSCluster-1" 
+  resource_group_name = "rg-AKSCluster-1"
+  rbac_aad_admin_group_object_ids = ["b9c2853a-380e-4b03-804b-cee2fd629141"]  
 }
